@@ -286,7 +286,6 @@ export default {
 			<div class="roulette_cover roulette_on" v-if="displayRoulette">
 				<div class="target" :class="{color_blue : rouletteRecipe[0].colorStatus}">
                     {{ rouletteRecipe[0].strMeal }}
-                    
                     <figure class="image image_box is-64x64">
                         <img :src="rouletteRecipe[0].strMealThumb" alt="Image">
                     </figure>
