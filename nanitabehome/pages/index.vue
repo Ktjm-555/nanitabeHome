@@ -296,7 +296,8 @@ export default {
                 </figure>
                 </div>	
                 <div class="target" :class="{color_green : rouletteRecipe[2].colorStatus}">
-                    {{ rouletteRecipe[2].strMeal }}                
+                    {{ rouletteRecipe[2].strMeal }}              
+                      
                     <figure class="image image_box is-64x64">
                         <img :src="rouletteRecipe[2].strMealThumb" alt="Image">
                     </figure>
