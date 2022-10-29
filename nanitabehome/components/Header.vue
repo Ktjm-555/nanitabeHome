@@ -1,10 +1,15 @@
 <script>
+
 export default {
     methods: {
         otherPage(event) {
             const pageNamePath = "/" + event.target.dataset.cat;
             this.$router.push(pageNamePath)
-        }
+        },
+    },
+
+    props: {
+        onTranslation: Boolean,
     }
 }
 </script>

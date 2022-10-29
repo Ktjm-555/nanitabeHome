@@ -1,7 +1,11 @@
 <script>
+import jsondataList from '@/assets/json/jsondata.json'
+
 export default {
+
     data() {
         return {
+            jsondataList: jsondataList,
             status: 'clear',
             rouletteRecipe: [],
             intervalId: 0,
@@ -31,13 +35,31 @@ export default {
             recipeSeafood: null,
             recipeVegetarian: null,
 
-
         }
     },
 
     async created() {
         const[rankingData, dataAmerican, dataJapanese, dataChinese, dataFrench, dataChicken, dataBeef, dataSeafood, dataVegetarian] = await Promise.all([
             useFetch('https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=1079324519433678968'),
+
+
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=a&cate=American', {
+            //     headers: {
+            //         'Access-Control-Allow-Origin' : '*',
+            //         'Content-Type' : 'application/json',
+            //     },
+            //     // mode: "no-cors" ,
+
+
+            // }),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=a&cate=Japanese'),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=a&cate=Chinese'),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=a&cate=French'),
+
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=c&cate=Chicken'),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=c&cate=Beef'),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=c&cate=Seafood'),
+            // useFetch('https://script.google.com/macros/s/AKfycbwCZ3RIpOh1VvTQH-4p_8ld8GkPmHOts805UgZYeWS2bGs2VEKjgZ26GkC3fCce7FJFFw/exec?initial=c&cate=Vegetarian'),
 
             useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?a=American'),
             useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?a=Japanese'),
@@ -101,7 +123,6 @@ export default {
             }, 90)
 
 			}
-
 		    
         },
 
@@ -114,6 +135,7 @@ export default {
             if (this.recipeTarget === 'not') {
                 alert('国名か素材名を選択してください。')
                 this.displayRoulette = false; 
+                this.clickNone = true;  
                 return;
 
 
@@ -197,7 +219,6 @@ export default {
 
 		clickOk() {
 			this.SecondclickNone = false;
-            this.transparency = false;
 
 		},
 
@@ -207,6 +228,8 @@ export default {
             // インデックスにランダムに数字を入れて、ランダムにレシピをルーレットに入れる。
             // 重複がでないように、同じIDのものは配列に入れないようにする。
             this.rouletteRecipe.push(recipeTarget[Math.floor(Math.random() * recipeTarget.length)]);
+            let jpList = this.jsondataList.find(e => e.strMeal === this.rouletteRecipe[0].strMeal);
+            this.rouletteRecipe[0].strMeal = jpList.strMealjp
             let remainingRecipe = recipeTarget.filter((e) => {
                 return e.idMeal !== this.rouletteRecipe[0].idMeal
             })
@@ -221,22 +244,37 @@ export default {
 
         SetRouletteRecipeHelper(helperVariable) {
             this.rouletteRecipe.push(helperVariable[Math.floor(Math.random() * helperVariable.length)])
+            let jpList = this.jsondataList.find(e => e.strMeal === this.rouletteRecipe[1].strMeal);
+            this.rouletteRecipe[1].strMeal = jpList.strMealjp
+            // this.translation(this.rouletteRecipe[1].strMeal)
+            // console.log(this.rouletteRecipe[1].strMeal)
             helperVariable = helperVariable.filter((e) => {
                 return e.idMeal !== this.rouletteRecipe[1].idMeal
             })
 
             this.rouletteRecipe.push(helperVariable[Math.floor(Math.random() * helperVariable.length)])
+            jpList = this.jsondataList.find(e => e.strMeal === this.rouletteRecipe[2].strMeal);
+            this.rouletteRecipe[2].strMeal = jpList.strMealjp
             helperVariable = helperVariable.filter((e) => {
                 return e.idMeal !== this.rouletteRecipe[2].idMeal
             })
 
             this.rouletteRecipe.push(helperVariable[Math.floor(Math.random() * helperVariable.length)])
+            jpList = this.jsondataList.find(e => e.strMeal === this.rouletteRecipe[3].strMeal);
+            this.rouletteRecipe[3].strMeal = jpList.strMealjp
             helperVariable = helperVariable.filter((e) => {
                 return e.idMeal !== this.rouletteRecipe[3].idMeal
             })
         },
 
-        aaotherPage(event) {
+        // なぜできない？
+        // translation(rouletteRecipeStrMeal) {
+        //     const jpList = this.jsondataList.find(e => e.strMeal === rouletteRecipeStrMeal);
+        //     return rouletteRecipeStrMeal = jpList.strMealjp
+        //     // console.log(rouletteRecipeStrMeal)
+        // },
+
+        otherPage(event) {
             this.recipeTarget = event.target.dataset.cat;
         },
 
@@ -245,89 +283,86 @@ export default {
 </script>
 
 <template>
-<div id="page" >
-    <Header></Header>
-	<Main>
-		<article class="box media roulette_box">
-			<h2 class="main_title">ルーレットで決める</h2>
-			<div class="click_container">
-				<div class="select is-warning">
-					<select v-model="recipeTarget">
-						<option value="not">選択してください</option>
-						<option value="not">--- 国 ---</option>
-						<option value="american">アメリカ</option>
-						<option value="japanese">日本</option>
-						<option value="chinese">中国</option>
-						<option value="french">フランス</option>
-						<option value="not">--- 素材 ---</option>
-						<option value="chicken">鶏肉</option>
-						<option value="beef">牛肉</option>
-						<option value="seafood">魚介</option>
-						<option value="vegetarian">野菜</option>
-					</select>
-				</div>               
+    <div id="page" >
+        <Header></Header>
+        <Main>
+            <div class="box media roulette_box">
+                <h2 class="main_title">ルーレットで決める</h2>
+                <div class="click_container">
+                    <div class="select is-warning">
+                        <select v-model="recipeTarget">
+                            <option value="not">選択してください</option>
+                            <option value="not">--- 国 ---</option>
+                            <option value="american">アメリカ</option>
+                            <option value="japanese">日本</option>
+                            <option value="chinese">中国</option>
+                            <option value="french">フランス</option>
+                            <option value="not">--- 素材 ---</option>
+                            <option value="chicken">鶏肉</option>
+                            <option value="beef">牛肉</option>
+                            <option value="seafood">魚介</option>
+                            <option value="vegetarian">野菜</option>
+                        </select>
+                    </div>               
+                    
+                    <div class="btn_container">
+                        <button class="button is-warning is-rounded is-medium is-responsive inline_btn"  :class="{transparency : transparency}" @click="set()">ルーレットにレシピをセットする</button>
+                        <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-if="status !== 'start'" :class="{click_none : clickNone, second_click_none : SecondclickNone}" @click="start()">スタート</button>
+                        <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-else @click="stop()">ストップ</button>
+                    </div>
+                </div>
                 
-                <div class="btn_container">
-                    <button class="button is-warning is-rounded is-medium is-responsive inline_btn"  :class="{transparency : transparency}" @click="set()">ルーレットにレシピをセットする</button>
-                    <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-if="status !== 'start'" :class="{click_none : clickNone, second_click_none : SecondclickNone}" @click="start()">スタート</button>
-                    <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-else @click="stop()">ストップ</button>
-                </div>
-				
-			</div>
-			
-			<div class="roulette_cover roulette_on" v-if="displayRoulette">
-				<div class="target" :class="{color_blue : rouletteRecipe[0].colorStatus}">
-                    {{ rouletteRecipe[0].strMeal }}
+                <div class="roulette_cover roulette_on" v-if="displayRoulette">
+                    <div class="target" :class="{color_blue : rouletteRecipe[0].colorStatus}">
+                        {{ rouletteRecipe[0].strMeal }}
+                        <figure class="image image_box is-64x64">
+                            <img :src="rouletteRecipe[0].strMealThumb" alt="Image">
+                        </figure>
+                    </div>
+                    <div class="target" :class="{color_red : rouletteRecipe[1].colorStatus}">{{ rouletteRecipe[1].strMeal }}
                     <figure class="image image_box is-64x64">
-                        <img :src="rouletteRecipe[0].strMealThumb" alt="Image">
+                        <img :src="rouletteRecipe[1].strMealThumb" alt="Image">
                     </figure>
+                    </div>	
+                    <div class="target" :class="{color_green : rouletteRecipe[2].colorStatus}">
+                        {{ rouletteRecipe[2].strMeal }}                
+                        <figure class="image image_box is-64x64">
+                            <img :src="rouletteRecipe[2].strMealThumb" alt="Image">
+                        </figure>
+                    </div>	
+                    <div class="target" :class="{color_yellow : rouletteRecipe[3].colorStatus}">
+                        {{ rouletteRecipe[3].strMeal }}
+                        <figure class="image image_box is-64x64">
+                            <img :src="rouletteRecipe[3].strMealThumb" alt="Image">
+                        </figure>
+                    </div>
                 </div>
-                <div class="target" :class="{color_red : rouletteRecipe[1].colorStatus}">{{ rouletteRecipe[1].strMeal }}
-                <figure class="image image_box is-64x64">
-                    <img :src="rouletteRecipe[1].strMealThumb" alt="Image">
-                </figure>
-                </div>	
-                <div class="target" :class="{color_green : rouletteRecipe[2].colorStatus}">
-                    {{ rouletteRecipe[2].strMeal }}              
-                      
-                    <figure class="image image_box is-64x64">
-                        <img :src="rouletteRecipe[2].strMealThumb" alt="Image">
-                    </figure>
-                </div>	
-				<div class="target" :class="{color_yellow : rouletteRecipe[3].colorStatus}">
-                    {{ rouletteRecipe[3].strMeal }}
-                    <figure class="image image_box is-64x64">
-                        <img :src="rouletteRecipe[3].strMealThumb" alt="Image">
-                    </figure>
-                </div>
-			</div>
 
-			<div class="roulette_cover roulette_on" v-else="displayRoulette">
-				<div class="target"></div>
-				<div class="target"></div>
-				<div class="target"></div>
-				<div class="target"></div>
-			</div>
-  
-		</article>
-
-            <Side
-                :recipeRankingList = "recipeRanking" 
-            ></Side>
-      
-	</Main>
-    <Footer></Footer>          
-<Modal 
-                :isActive="isActive" 
-                :todayRecipeTitle="todayRecipe.recipeTitle"
-                :todayRecipeUrl="todayRecipe.recipeUrl"
-                :todayRecipeImg="todayRecipe.img"
-                @closeResModal="closeResModal"
-				@clickOk="clickOk"
-            ></Modal>
+                <div class="roulette_cover roulette_on" v-else="displayRoulette">
+                    <div class="target"></div>
+                    <div class="target"></div>
+                    <div class="target"></div>
+                    <div class="target"></div>
+                </div>
     
-</div>
+            </div>
 
+                <Side
+                    :recipeRankingList = "recipeRanking" 
+                ></Side>
+        
+        </Main>
+        <Footer></Footer>          
+                <Modal 
+                    :isActive="isActive" 
+                    :todayRecipeTitle="todayRecipe.recipeTitle"
+                    :todayRecipeUrl="todayRecipe.recipeUrl"
+                    :todayRecipeImg="todayRecipe.img"
+                    @closeResModal="closeResModal"
+                    @clickOk="clickOk"
+                ></Modal>
+        
+    </div>
 </template>
 
 <style lang="scss">
