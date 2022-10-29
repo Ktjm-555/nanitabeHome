@@ -7,10 +7,6 @@ export default {
             this.$router.push(pageNamePath)
         },
     },
-
-    props: {
-        onTranslation: Boolean,
-    }
 }
 </script>
 

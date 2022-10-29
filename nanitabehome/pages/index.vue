@@ -2,7 +2,7 @@
 import jsondataList from '@/assets/json/jsondata.json'
 
 export default {
-
+    
     data() {
         return {
             jsondataList: jsondataList,
@@ -283,86 +283,87 @@ export default {
 </script>
 
 <template>
-    <div id="page" >
-        <Header></Header>
-        <Main>
-            <div class="box media roulette_box">
-                <h2 class="main_title">ルーレットで決める</h2>
-                <div class="click_container">
-                    <div class="select is-warning">
-                        <select v-model="recipeTarget">
-                            <option value="not">選択してください</option>
-                            <option value="not">--- 国 ---</option>
-                            <option value="american">アメリカ</option>
-                            <option value="japanese">日本</option>
-                            <option value="chinese">中国</option>
-                            <option value="french">フランス</option>
-                            <option value="not">--- 素材 ---</option>
-                            <option value="chicken">鶏肉</option>
-                            <option value="beef">牛肉</option>
-                            <option value="seafood">魚介</option>
-                            <option value="vegetarian">野菜</option>
-                        </select>
-                    </div>               
-                    
-                    <div class="btn_container">
-                        <button class="button is-warning is-rounded is-medium is-responsive inline_btn"  :class="{transparency : transparency}" @click="set()">ルーレットにレシピをセットする</button>
-                        <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-if="status !== 'start'" :class="{click_none : clickNone, second_click_none : SecondclickNone}" @click="start()">スタート</button>
-                        <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-else @click="stop()">ストップ</button>
-                    </div>
-                </div>
+<div id="page" >
+    <Header></Header>
+	<Main>
+		<article class="box media roulette_box">
+			<h2 class="main_title">ルーレットで決める</h2>
+			<div class="click_container">
+				<div class="select is-warning">
+					<select v-model="recipeTarget">
+						<option value="not">選択してください</option>
+						<option value="not">--- 国 ---</option>
+						<option value="american">アメリカ</option>
+						<option value="japanese">日本</option>
+						<option value="chinese">中国</option>
+						<option value="french">フランス</option>
+						<option value="not">--- 素材 ---</option>
+						<option value="chicken">鶏肉</option>
+						<option value="beef">牛肉</option>
+						<option value="seafood">魚介</option>
+						<option value="vegetarian">野菜</option>
+					</select>
+				</div>               
                 
-                <div class="roulette_cover roulette_on" v-if="displayRoulette">
-                    <div class="target" :class="{color_blue : rouletteRecipe[0].colorStatus}">
-                        {{ rouletteRecipe[0].strMeal }}
-                        <figure class="image image_box is-64x64">
-                            <img :src="rouletteRecipe[0].strMealThumb" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="target" :class="{color_red : rouletteRecipe[1].colorStatus}">{{ rouletteRecipe[1].strMeal }}
+                <div class="btn_container">
+                    <button class="button is-warning is-rounded is-medium is-responsive inline_btn"  :class="{transparency : transparency}" @click="set()">ルーレットにレシピをセットする</button>
+                    <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-if="status !== 'start'" :class="{click_none : clickNone, second_click_none : SecondclickNone}" @click="start()">スタート</button>
+                    <button class="button btn_right is-warning is-rounded is-medium is-responsive" v-else @click="stop()">ストップ</button>
+                </div>
+			</div>
+			
+			<div class="roulette_cover roulette_on" v-if="displayRoulette">
+				<div class="target" :class="{color_blue : rouletteRecipe[0].colorStatus}">
+                    {{ rouletteRecipe[0].strMeal }}
                     <figure class="image image_box is-64x64">
-                        <img :src="rouletteRecipe[1].strMealThumb" alt="Image">
+                        <img :src="rouletteRecipe[0].strMealThumb" alt="Image">
                     </figure>
-                    </div>	
-                    <div class="target" :class="{color_green : rouletteRecipe[2].colorStatus}">
-                        {{ rouletteRecipe[2].strMeal }}                
-                        <figure class="image image_box is-64x64">
-                            <img :src="rouletteRecipe[2].strMealThumb" alt="Image">
-                        </figure>
-                    </div>	
-                    <div class="target" :class="{color_yellow : rouletteRecipe[3].colorStatus}">
-                        {{ rouletteRecipe[3].strMeal }}
-                        <figure class="image image_box is-64x64">
-                            <img :src="rouletteRecipe[3].strMealThumb" alt="Image">
-                        </figure>
-                    </div>
                 </div>
+                <div class="target" :class="{color_red : rouletteRecipe[1].colorStatus}">{{ rouletteRecipe[1].strMeal }}
+                <figure class="image image_box is-64x64">
+                    <img :src="rouletteRecipe[1].strMealThumb" alt="Image">
+                </figure>
+                </div>	
+                <div class="target" :class="{color_green : rouletteRecipe[2].colorStatus}">
+                    {{ rouletteRecipe[2].strMeal }}                
+                    <figure class="image image_box is-64x64">
+                        <img :src="rouletteRecipe[2].strMealThumb" alt="Image">
+                    </figure>
+                </div>	
+				<div class="target" :class="{color_yellow : rouletteRecipe[3].colorStatus}">
+                    {{ rouletteRecipe[3].strMeal }}
+                    <figure class="image image_box is-64x64">
+                        <img :src="rouletteRecipe[3].strMealThumb" alt="Image">
+                    </figure>
+                </div>
+			</div>
 
-                <div class="roulette_cover roulette_on" v-else="displayRoulette">
-                    <div class="target"></div>
-                    <div class="target"></div>
-                    <div class="target"></div>
-                    <div class="target"></div>
-                </div>
+			<div class="roulette_cover roulette_on" v-else="displayRoulette">
+				<div class="target"></div>
+				<div class="target"></div>
+				<div class="target"></div>
+				<div class="target"></div>
+			</div>
+  
+		</article>
+
+            <Side
+                :recipeRankingList = "recipeRanking" 
+            ></Side>
+      
+	</Main>
+    <Footer></Footer>          
+            <Modal 
+                :isActive="isActive" 
+                :todayRecipeTitle="todayRecipe.recipeTitle"
+                :todayRecipeUrl="todayRecipe.recipeUrl"
+                :todayRecipeImg="todayRecipe.img"
+                @closeResModal="closeResModal"
+				@clickOk="clickOk"
+            ></Modal>
     
-            </div>
+</div>
 
-                <Side
-                    :recipeRankingList = "recipeRanking" 
-                ></Side>
-        
-        </Main>
-        <Footer></Footer>          
-                <Modal 
-                    :isActive="isActive" 
-                    :todayRecipeTitle="todayRecipe.recipeTitle"
-                    :todayRecipeUrl="todayRecipe.recipeUrl"
-                    :todayRecipeImg="todayRecipe.img"
-                    @closeResModal="closeResModal"
-                    @clickOk="clickOk"
-                ></Modal>
-        
-    </div>
 </template>
 
 <style lang="scss">

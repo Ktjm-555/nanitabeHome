@@ -1,94 +1,68 @@
 <script>
+
 export default {
-    props: {
-        recipeRankingList: Array,
-    }
+props: {
+    isActive: Boolean,
+    todayRecipeTitle: String,
+    todayRecipeUrl: String,
+    todayRecipeImg: String,
+
+}
+
 }
 </script>
 <template>
-    <aside class="box side">
-        <h2>週間楽天レシピランキング</h2>
-        <div class="side_box" v-for="item in recipeRankingList" :key="recipeRankingList">
-            <article class="media">
-                <div class="media-left">
-                    <figure class="image image_box is-64x64">
-                        <img :src="item.foodImageUrl" alt="Image">
-                    </figure>
+    <div class="modal" :class="{'is-active' : isActive}">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">🍴本日はこれ食べる🍚</p>
+                <button class="delete" aria-label="close" @click="$emit('closeResModal'); $emit('clickOk')"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="content">
+                    <h2 v-if="isActive">{{ todayRecipeTitle }}</h2>
+                    <img v-if="isActive" class="modal_img" :src="todayRecipeImg">
+                    <h3>作り方はこちら🔻</h3>
+                    <a v-if="isActive" target="_blank" :href="todayRecipeUrl" >{{ todayRecipeUrl }}</a>
                 </div>
-                <div class="media-content">
-                    <div class="content">
-                        <p>
-                        {{ item.rank }}位<br>
-                        <a target="_blank" :href="item.recipeUrl">{{ item.recipeTitle }}</a>
-                        <br>
-                        </p>
-                    </div>
-                </div>
-            </article>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-warning is-rounded"  @click="$emit('closeResModal'); $emit('clickOk')">閉じる</button>
+            </footer>
         </div>
-        <div class="information">
-            提供：<a href="https://recipe.rakuten.co.jp/">楽天レシピ</a>
-        </div>
-    </aside>
+    </div>
 </template>
 <style lang="scss">
-.side {
-    // margin: 20px 0px 20px 30px;
-    margin: 20px;
-    width: 350px;
-    height: 675px;
+.modal {
+    animation-name: fade;
+    animation-duration: 0.5s;
 
-    h2 {
-        text-align: center;
+    @keyframes fade {
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
     }
 
-    .side_box {
-
-        .media {
-            display: flex;
-            width:fit-content;
-            margin-top: 15px;
-            height: 100px;
+    .modal-card {
+        text-align: center;
 
 
-
-            .media-left {
-                min-width: 60px;
-
-                .image_box {
-                    display: flex;
-                    padding-left: 5px;
-                }
-            }
-        }
-
-        p {
-            font-size: 15px;
-            display: block;
-            padding: 0 5px;
-        }
-
-        img {
+        .modal_img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin: 0 auto;
             display: block;
         }
+
     }
 
-    .information {
-        margin-top: 10px;
-        text-align: center;
-    }
-}
-
-@media screen and ( max-width:479px ) {
-    .main_wrap {
-
-        .side {
-            box-sizing: border-box;
-            margin: 5px;
-            width: 99%;
-            height: 100%;
-            
-        }
+    .button {
+        margin: 0;
     }
 }
 </style>
