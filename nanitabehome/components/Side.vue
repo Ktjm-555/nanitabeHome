@@ -5,6 +5,7 @@ export default {
     }
 }
 
+
 </script>
 <template>
     <aside class="box side">
