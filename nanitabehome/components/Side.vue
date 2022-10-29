@@ -4,6 +4,7 @@ export default {
         recipeRankingList: Array,
     }
 }
+
 </script>
 <template>
     <aside class="box side">
