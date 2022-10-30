@@ -14,12 +14,12 @@ export default {
 			useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Breakfast'),
 		]);
 
-	this.recipeRanking = rankingData.data.value.result;
-	this.catRecipeList = dataCatRecipe.data.value.meals;
+		this.recipeRanking = rankingData.data.value.result;
+		this.catRecipeList = dataCatRecipe.data.value.meals;
 
-	this.catRecipeList.forEach((e) => {
-		e.recipeUrl = 'https://www.themealdb.com/meal/' + e.idMeal
-	})
+		this.catRecipeList.forEach((e) => {
+			e.recipeUrl = 'https://www.themealdb.com/meal/' + e.idMeal
+		})
 
     },
 }
@@ -31,7 +31,9 @@ export default {
 	<Header></Header>
 	<Main>
 		<article class="box media">
-			<Catpage :recipeList="catRecipeList">
+			<Catpage 
+				:recipeList="catRecipeList"
+			>
 				<h2>朝食カテゴリーレシピ一覧</h2>
 			</Catpage>
 		</article>

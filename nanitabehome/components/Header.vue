@@ -23,7 +23,7 @@ export default {
                     <button class="button is-rounded other_btn" @click="otherPage($event)" data-cat="dessert">デザート</button>
                     <button class="button is-rounded other_btn" @click="otherPage($event)" data-cat="pasta">パスタ</button>
                     <button class="button is-rounded other_btn" @click="otherPage($event)" data-cat="pork">豚肉</button>
-                </div>    
+                </div>
             </div>
         </div>
     </header>

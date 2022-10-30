@@ -11,7 +11,7 @@ export default {
 	async created() {
 		const[rankingData, dataCatRecipe] = await Promise.all([
 			useFetch('https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?applicationId=1079324519433678968'),
-			useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Pasta'),
+			useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Pork'),
 		]);
 
 	this.recipeRanking = rankingData.data.value.result;

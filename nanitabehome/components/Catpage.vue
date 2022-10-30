@@ -1,12 +1,40 @@
 <script>
+import jsondataList from '@/assets/json/jsondata.json'
+
 export default {
-    props: {
-        recipeList: Object,
-    },
+
+	data () {
+		return {
+			jsondataList: jsondataList,
+		}
+	},
+
+	created () {
+
+		this.recipeList.forEach((e) => {
+			let jpList = this.jsondataList.find(j => j.strMeal === e.strMeal);
+			e.strMeal = jpList.strMealjp
+		})
+
+	},
+ 
+
+
+	props: {
+		recipeList: Object,
+	},
 
 	methods: {
 		clickUrl(recipeUrl) {
 			window.open(recipeUrl, '_blank')
+		},
+
+		aaa() {
+			// this.recipeList.forEach((e) => {
+			// 	let jpList = this.jsondataList.find(j => j.strMeal === e.strMeal);
+			// 	e.strMeal = jpList.strMealjp
+			// })
+
 		}
 	}
 
@@ -29,6 +57,8 @@ export default {
 				</div>
 			</div>
 	</div>
+				<button @click="aaa()" >aaa</button>
+
 </div>
 </template>
 <style lang="scss">

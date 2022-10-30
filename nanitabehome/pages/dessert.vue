@@ -14,12 +14,12 @@ export default {
 			useFetch('https://www.themealdb.com/api/json/v1/1/filter.php?c=Dessert'),
 		]);
 
-	this.recipeRanking = rankingData.data.value.result;
-	this.catRecipeList = dataCatRecipe.data.value.meals;
+		this.recipeRanking = rankingData.data.value.result;
+		this.catRecipeList = dataCatRecipe.data.value.meals;
 
-	this.catRecipeList.forEach((e) => {
-		e.recipeUrl = 'https://www.themealdb.com/meal/' + e.idMeal
-	})
+		this.catRecipeList.forEach((e) => {
+			e.recipeUrl = 'https://www.themealdb.com/meal/' + e.idMeal
+		})
 
     },
 }
@@ -37,7 +37,7 @@ export default {
 		</article>
 
 		<Side
-			:recipeRankingList = "recipeRanking" 
+			:recipeRankingList = "recipeRanking"
 		></Side>
 
 		
